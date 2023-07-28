@@ -1,0 +1,22 @@
+﻿<Window x:Class="CarGo.ParcerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CarGo"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner" 
+        MinHeight="300"
+        MinWidth="400"
+        SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize"
+        Title="ParcerWindow">
+   
+    <Grid>
+        <StackPanel>
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" FontWeight="Bold">Настройте Парсер</Label>
+            <TextBox FontSize="14" x:Name="ParcerTextBox"  Width="350" Height="200" HorizontalAlignment="Stretch"/>
+            <Button Click="OkBtn" BorderThickness="0" Width="50" FontSize="16" HorizontalAlignment="Center" Margin="10" Background="DarkCyan">OK</Button>
+        </StackPanel>
+    </Grid>
+</Window>

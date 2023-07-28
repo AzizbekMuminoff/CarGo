@@ -1,0 +1,22 @@
+﻿<Window x:Class="CarGo.ServerConf"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CarGo"
+        mc:Ignorable="d"
+        Title="ServerConf" Height="200" Width="300">
+    <Grid>
+        <StackPanel Margin="10">
+            <StackPanel Orientation="Horizontal">
+                <Label HorizontalAlignment="Center" Width="70"> IP Adress</Label>
+                <TextBox x:Name="AdressBox" Width="220"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label HorizontalAlignment="Center" Width="70">PORT</Label>
+                <TextBox x:Name="PortBox" Width="220"/>
+            </StackPanel>
+            <Button HorizontalAlignment="Center" Width="40" Click="OkBtn" Margin="10">OK</Button>
+        </StackPanel>
+    </Grid>
+</Window>

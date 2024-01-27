@@ -13,30 +13,20 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="6*"></ColumnDefinition>
             <ColumnDefinition Width="14*"></ColumnDefinition>
-            <ColumnDefinition  Width="0.2*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*">
             </RowDefinition>
             <RowDefinition Height="12*"></RowDefinition>
-            <RowDefinition Height="0.2*"></RowDefinition>
         </Grid.RowDefinitions>
-        
+
         <m:Map x:Name="myMap" Grid.Row="1" Grid.Column="1" 
                Mode="Road"
                CredentialsProvider="AoPqjB1O-NqKVKHV1524LWqqWSWbpyyirQ_I21R5HfEAk2rxQgF-KRTrNGvLE9a1" 
                Center="41.2806029,69.249007" ZoomLevel="13"
                HorizontalAlignment="Stretch">
-            <Button m:MapLayer.Position="41.2806029,69.249007"
-                    m:MapLayer.PositionOrigin="Center"
-                    HorizontalAlignment="Center" VerticalAlignment="Center"
-                    Background="Transparent"
-                    BorderThickness="0">
-                <StackPanel Background="Transparent">
-                    
-                </StackPanel>
-            </Button>
+            
         </m:Map>
 
         <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
@@ -50,55 +40,24 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="btn1" Click="SendIP" Background="CadetBlue" BorderThickness="0" Grid.Column="0" TextBlock.FontSize="14" TextBlock.TextAlignment="Center" Margin="0, 10" Content="Функционал"></Button>
-            <Button x:Name="btn2" Click="ClearView" Background="CadetBlue" BorderThickness="0" Grid.Column="1" TextBlock.FontSize="14" TextBlock.TextAlignment="Center" Margin="0, 10" Content="Функционал"></Button>
-            <Button x:Name="btn3" Background="CadetBlue" BorderThickness="0" Grid.Column="2" Grid.ColumnSpan="2" TextBlock.FontSize="14" TextBlock.TextAlignment="Center" Margin="0, 10"  Content="Управление автопарком"></Button>
-            <Button x:Name="btn4" Background="CadetBlue" BorderThickness="0" Grid.Column="4" TextBlock.FontSize="14" TextBlock.TextAlignment="Center" Margin="0, 10" Content="Календарь"></Button>
-            <Button x:Name="btn5" Click="ServerConfOpen" Background="CadetBlue" BorderThickness="0" Grid.Column="5" TextBlock.FontSize="14" TextBlock.TextAlignment="Center" Margin="0, 10" Content="Сервер"></Button>
-            <Button x:Name="btn6" Click="ParserOpen" Background="CadetBlue" BorderThickness="0" Grid.Column="6" TextBlock.FontSize="14" TextBlock.TextAlignment="Center" Margin="0, 10" Content="Парсер"></Button>
+            <Button x:Name="btn1" Click="SendIP" Background="DarkSeaGreen" BorderThickness="0" Grid.Column="0" TextBlock.FontSize="14" TextBlock.TextAlignment="Center" Content="Функционал"></Button>
+            <Button x:Name="btn2" Click="ClearView" Background="DarkSeaGreen" BorderThickness="0" Grid.Column="1" TextBlock.FontSize="14" TextBlock.TextAlignment="Center" Content="Скрыть таймстеп"></Button>
+            <Button x:Name="btn3" Background="DarkSeaGreen" BorderThickness="0" Grid.Column="2" Grid.ColumnSpan="2" TextBlock.FontSize="14" TextBlock.TextAlignment="Center" Content="Управление автопарком"></Button>
+            <Button x:Name="btn4" Background="DarkSeaGreen" BorderThickness="0" Grid.Column="4" TextBlock.FontSize="14" TextBlock.TextAlignment="Center" Content="Календарь"></Button>
+            <Button x:Name="btn5" Click="ServerConfOpen" Background="DarkSeaGreen" BorderThickness="0" Grid.Column="5" TextBlock.FontSize="14" TextBlock.TextAlignment="Center" Content="Сервер"></Button>
+            <Button x:Name="btn6" Click="ParserOpen" Background="DarkSeaGreen" BorderThickness="0" Grid.Column="6" TextBlock.FontSize="14" TextBlock.TextAlignment="Center"  Content="ЛОГ"></Button>
         </Grid>
 
-        <StackPanel Grid.Row="1" Grid.Column="0">
-            <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Bold">
+        <StackPanel Grid.Row="1" Grid.Column="0" x:Name="CarList">
+            <Label HorizontalAlignment="Stretch" Width="auto" HorizontalContentAlignment="Center" VerticalAlignment="Center" Background="AliceBlue" Foreground="Black" FontSize="16" FontWeight="Bold">
                 Текущие авто
             </Label>
 
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.3*"></ColumnDefinition>
-                    <ColumnDefinition Width="0.7*"></ColumnDefinition>
-                    <ColumnDefinition Width="0.8*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="0.6*"></ColumnDefinition>
-                    <ColumnDefinition Width="0.8*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
+            <local:CarListItem></local:CarListItem>
+            <local:CarListItem></local:CarListItem>
+            <local:CarListItem></local:CarListItem>
+            <local:CarListItem></local:CarListItem>
 
-                <Label Grid.Column="0" HorizontalAlignment="Center">N</Label>
-                <Label Grid.Column="1" HorizontalAlignment="Center">Номер</Label>
-                <Label Grid.Column="2" HorizontalAlignment="Center">Водитель</Label>
-                <Label Grid.Column="3" HorizontalAlignment="Center">Тип Машины</Label>
-                <Label Grid.Column="4" HorizontalAlignment="Center">Цвет</Label>
-                <Label Grid.Column="5" HorizontalAlignment="Center">Показать</Label>
-            </Grid>
-            <Separator></Separator>
-
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.3*"></ColumnDefinition>
-                    <ColumnDefinition Width="0.7*"></ColumnDefinition>
-                    <ColumnDefinition Width="0.8*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="0.6*"></ColumnDefinition>
-                    <ColumnDefinition Width="0.8*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-
-                <Label Grid.Column="0" HorizontalAlignment="Center">1</Label>
-                <Label Grid.Column="1" HorizontalAlignment="Center">#TEST</Label>
-                <Label Grid.Column="2" HorizontalAlignment="Center">#TEST</Label>
-                <Label Grid.Column="3" HorizontalAlignment="Center">#TEST </Label>
-                <Ellipse Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Width="15" Height="15" Fill="DarkKhaki"></Ellipse>
-                <CheckBox Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="True"></CheckBox>
-            </Grid>
         </StackPanel>
 
     </Grid>

@@ -1,4 +1,5 @@
-﻿using CarGo.Models;
+﻿using CarGo.Controllers;
+using CarGo.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +24,10 @@ namespace CarGo
         public ParcerWindow()
         {
             InitializeComponent();
-            ParcerTextBox.Text = GPSModel.ParsingMode;
+            ParcerTextBox.Text= DebugLogController.GetLog() ;
         }
         private void OkBtn(Object sender, RoutedEventArgs e)
         {
-            GPSModel.ParsingMode = ParcerTextBox.Text;
-            GPSModel.ParseMode = ParcerTextBox.Text.Split("\n");
             
         }
     }

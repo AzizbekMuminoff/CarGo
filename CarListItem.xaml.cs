@@ -1,5 +1,4 @@
-﻿using CarGo.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,25 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace CarGo
 {
     /// <summary>
-    /// Interaction logic for AutoPark.xaml
+    /// Interaction logic for CarListItem.xaml
     /// </summary>
-    public partial class AutoPark : Window
+    public partial class CarListItem : UserControl
     {
-        public AutoPark()
+        public CarListItem()
         {
             InitializeComponent();
-            SaveBTN.Click += SaveData;
-        }
-
-        private void SaveData(Object sender, EventArgs e)
-        {
-            CarModel carm = new CarModel("DAMAS", CarNumber.Text, CarDriver.Text, Imei.Text);
-            
         }
     }
 }

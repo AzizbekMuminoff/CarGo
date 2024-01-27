@@ -7,6 +7,32 @@
         mc:Ignorable="d"
         Title="AutoPark" Height="450" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="8*"></ColumnDefinition>
+            <ColumnDefinition Width="14*"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
         
+        
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>    
+        </Grid.RowDefinitions>
+
+        <Label Grid.Column="1" Grid.Row="0" HorizontalContentAlignment="Center" FontSize="14" VerticalContentAlignment="Center">IMEI</Label>
+        <TextBox x:Name="Imei" Grid.Column="2" Grid.Row="0" HorizontalContentAlignment="Center" FontSize="14" VerticalContentAlignment="Center">IMEI</TextBox>
+
+        <Label Grid.Column="1" Grid.Row="1" HorizontalContentAlignment="Center" FontSize="14" VerticalContentAlignment="Center">Водитель</Label>
+        <TextBox x:Name="CarDriver" Grid.Column="2" Grid.Row="1" HorizontalContentAlignment="Center" FontSize="14" VerticalContentAlignment="Center">IMEI</TextBox>
+
+        <Label Grid.Column="1" Grid.Row="2" HorizontalContentAlignment="Center" FontSize="14" VerticalContentAlignment="Center">Номер Машины</Label>
+        <TextBox x:Name="CarNumber" Grid.Column="2" Grid.Row="2" HorizontalContentAlignment="Center" FontSize="14" VerticalContentAlignment="Center">IMEI</TextBox>
+
+        <Button FontSize="14" Grid.Row="4" Grid.Column="1" x:Name="SaveBTN">СОХРАНИТЬ</Button>
     </Grid>
 </Window>

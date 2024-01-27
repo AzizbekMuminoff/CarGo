@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,6 +24,7 @@ namespace CarGo
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool isTimeShowed = true;
         private GeneralCOntroller gc;
         public MainWindow()
         {
@@ -32,18 +34,25 @@ namespace CarGo
             gc = new GeneralCOntroller(map);
             gc.Init();
 
-            gc.Draw(new Models.GPSModel(69.239007, 41.2820029, "23", "22/55/66"));
-            gc.Draw(new Models.GPSModel(69.238007, 41.2846029, "23", "22/55/66"));
-            gc.Draw(new Models.GPSModel(69.239007, 41.2856029, "23", "22/55/66"));
-            gc.Draw(new Models.GPSModel(69.240007, 41.2866029, "23", "22/55/66"));
-            gc.Draw(new Models.GPSModel(69.241007, 41.2886029, "23", "22/55/66"));
+            Position p = new Position();
+            p.Lo = 69.2177;
+            p.La = 41.2615;
+            p.GpsTime = "1691486143979";
 
+            gc.AddGPS(p, "123");
+
+            p = new Position();
+            p.Lo = 69.2144;
+            p.La = 41.2644;
+            p.GpsTime = "1691486143922";
+            
+            gc.AddGPS(p, "123");
         }
 
         private void SendIP(Object sender, RoutedEventArgs e)
         {
-            //Debug.WriteLine("BUTTON PRESSED");
-            gc.SendIP();
+            TcpClient client = new TcpClient("83.222.7.183", 65355);
+            client.GetStream().Write(new byte[] { 0, 0, 0, 1 });
         }
 
         private void ParserOpen(Object sender, RoutedEventArgs e)
@@ -63,11 +72,23 @@ namespace CarGo
         private void CloseAll(Object sender, System.ComponentModel.CancelEventArgs e)
         {
             //Debug.WriteLine("Closed");
+
             gc.CloseAll();
         }
         private void ClearView(Object sender, RoutedEventArgs e)
         {
-            gc.Clear();
+            if (isTimeShowed)
+            {
+                gc.MapClearTimeStamp();
+                isTimeShowed = false;
+                btn2.Content = "Показать Таймстемп";
+            }
+            else
+            {
+                gc.MapShowTimeStamp();
+                isTimeShowed = true;
+                btn2.Content = "Скрыть Таймстемп";
+            }
         }
     }
 }

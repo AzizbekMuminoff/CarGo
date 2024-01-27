@@ -9,14 +9,14 @@
         MinHeight="300"
         MinWidth="400"
         SizeToContent="WidthAndHeight"
-        ResizeMode="NoResize"
         Title="ParcerWindow">
    
     <Grid>
         <StackPanel>
-            <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" FontWeight="Bold">Настройте Парсер</Label>
-            <TextBox FontSize="14" x:Name="ParcerTextBox"  Width="350" Height="200" HorizontalAlignment="Stretch"/>
-            <Button Click="OkBtn" BorderThickness="0" Width="50" FontSize="16" HorizontalAlignment="Center" Margin="10" Background="DarkCyan">OK</Button>
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" FontWeight="Bold">Active log</Label>
+            <ScrollViewer VerticalAlignment="Stretch">
+                <TextBlock FontSize="14" x:Name="ParcerTextBox"  Width="auto" Height="auto" HorizontalAlignment="Stretch"/>
+            </ScrollViewer>
         </StackPanel>
     </Grid>
 </Window>

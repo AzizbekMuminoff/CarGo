@@ -8,15 +8,17 @@ using System.Threading.Tasks;
 using CarGo.Models;
 using System.Diagnostics;
 using System.IO;
+using System.Security.Cryptography;
+using System.Windows;
 
 namespace CarGo.Controllers
 {
     class TCPController
     {
 
-        public static Int32 PORTID = 4413;
-        public static string IPADDRESS = "192.168.1.11";
-        public GeneralCOntroller gc;
+        public static Int32 PORTID = 65355;
+        public static string IPADDRESS = "83.222.7.183";
+        public GeneralCOntroller? gc;
         private TcpListener server;
 
         internal void close()
@@ -26,92 +28,99 @@ namespace CarGo.Controllers
             server.Stop();
         }
 
-        public void Work()
+        public async void Work()
         {
-            server = null;
             try
             {
-                /*
-                ServerController s = new ServerController();
-                Debug.WriteLine("SERVERS INIT");
-                s.Work();
-                Debug.WriteLine("SERVERS INIT FIN");*/
 
-
-                IPAddress iPAddress = IPAddress.Any;
+                Debug.WriteLine("Starting the server");
+                server = new TcpListener(IPAddress.Any, PORTID);
                 
-                server = new TcpListener(iPAddress, PORTID);
-
-                // Start listening for client requests.
+                DebugLogController.WriteLine("Старт сервера...");
                 server.Start();
-                Debug.WriteLine("Server started... ");
-                string request = "";
 
-                // Enter the listening loop.
                 while (true)
                 {
-                    Debug.WriteLine("Waiting for a connection.");
-                    TcpClient client = server.AcceptTcpClient();
-                    Debug.WriteLine("Client accepted.");
-                    NetworkStream stream = client.GetStream();
-                    StreamReader sr = new StreamReader(client.GetStream());
-                    StreamWriter sw = new StreamWriter(client.GetStream());
-                    try
-                    {
-                        byte[] buffer = new byte[1024];
-                        stream.Read(buffer, 0, buffer.Length);
-                        int recv = 0;
-                        foreach (byte b in buffer)
-                        {
-                            if (b != 0)
-                            {
-                                recv++;
-                            }
-                        }
-                        request = Encoding.UTF8.GetString(buffer, 0, recv);
-                        Console.WriteLine("request received");
-                        sw.WriteLine("You rock!");
-                        sw.Flush();
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine("Something went wrong.");
-                        sw.WriteLine(e.ToString());
-                    }
+                    DebugLogController.WriteLine("Ждем подключение...");
+                    TcpClient client = await server.AcceptTcpClientAsync();
 
-                    if (request != null && !request.Equals(string.Empty))
-                    {
-                        GPSModel pp = GPSModel.ParseGPS(request);
-
-                        if (pp != null)
-                        {
-                            gc.AddGPS(pp);
-                        }
-                    }
+                    HandleClient(client);
                 }
-                
 
             }
             catch (SocketException e)
             {
-                Debug.WriteLine("SocketException: {0}", e);
+                DebugLogController.WriteLine("ОШИБКА СЕРВЕРА...");
+                Debug.WriteLine("SocketException: {0}", " 2" + e);
             }
             catch (Exception e)
             {
-                Console.WriteLine("SocketException: {0}", e);
+                DebugLogController.WriteLine("ОШИБКА СЕРВЕРА...");
+                Console.WriteLine("SocketException: {0}", " 2" + e);
             }
             finally
             {
-                Console.WriteLine("SocketException: {0}");
-                //server.Stop();
+                Console.WriteLine("SocketException: {0}" + " 2");
+                DebugLogController.WriteLine("ОШИБКА СЕРВЕРА...");
+                server.Stop();
             }
 
-
-
-
-            Debug.WriteLine("\nHit enter to continue...");
-            //Console.Read();
+            DebugLogController.WriteLine("\nСервер отключен...");
         }
 
+        private void HandleClient(TcpClient client)
+        {
+            DebugLogController.WriteLine("ЕСТЬ ПОДКЛЮЧЕНИЕ!");
+
+            NetworkStream ns = client.GetStream();
+            
+            Byte[] buffer = new byte[2048];
+
+            int numOfBits = ns.Read(buffer, 0, buffer.Length);
+
+            DebugLogController.WriteLine("ПОЛУЧЕН ПАКЕТ 1: " + numOfBits);
+
+            if (numOfBits != 17)
+            {
+                DebugLogController.WriteLine("Подключение не удалось: IMEI не действительный");
+                return;
+            }
+
+            var imei = Convert.ToHexString(buffer, 0, numOfBits).Substring(4);
+
+            DebugLogController.WriteLine("ПОЛУЧЕН IMEI: " + imei);
+
+
+            Byte[] res = { 0x01 };
+
+            ns.Write(res, 0, 1);
+            ns.Flush();
+
+
+            numOfBits = ns.Read(buffer);
+
+            try
+            {
+
+                List<Position> list = Parser.ParseData(buffer, numOfBits);
+                DebugLogController.WriteLine("ПОЛУЧЕН ПАКЕТ 2: " + numOfBits);
+
+                foreach (Position pol in list)
+                {
+                    if (pol.La == 0 && pol.Lo == 0)
+                    {
+                        DebugLogController.WriteLine("недействительный GPS");
+                        continue;
+                    }
+                    else
+                    {
+                        gc.AddGPS(pol, imei);
+                    }
+                }
+            }catch(Exception e)
+            {
+                DebugLogController.WriteLine("Ошибка парсинга");
+            }
+        }
     }
 }
